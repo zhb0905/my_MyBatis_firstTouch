@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--!!namespace-->
+
+<mapper namespace="com.zhb.mybatis.mapper.EmpMapper">
+    <!--    &lt;!&ndash;    User getUserById(@Param("id") int id);&ndash;&gt;-->
+    <!--    <select id="getUserById" resultType="User">-->
+    <!--        select *-->
+    <!--        from t_user-->
+    <!--        where id = #{id}-->
+    <!--    </select>-->
+
+    <resultMap id="empDeptMap" type="Emp">
+        <id column="eid" property="eid"></id>
+        <result column="ename" property="ename"></result>
+        <result column="age" property="age"></result>
+        <result column="sex" property="sex"></result>
+        <result column="did" property="dept.did"></result>
+        <result column="dname" property="dept.dname"></result>
+    </resultMap>
+    <!--Emp getEmpAndDeptByEid(@Param("eid") int eid);-->
+    <select id="getEmpAndDeptByEid" resultMap="empDeptMap">
+        select emp.*,dept.* from t_emp emp left join t_dept dept on emp.did = dept.did where emp.eid = #{eid}
+    </select>
+
+</mapper>

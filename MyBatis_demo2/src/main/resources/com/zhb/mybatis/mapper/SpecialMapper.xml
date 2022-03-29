@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--!!namespace-->
+
+<mapper namespace="com.zhb.mybatis.mapper.SpecialMapper">
+    <!--    &lt;!&ndash;    User getUserById(@Param("id") int id);&ndash;&gt;-->
+    <!--    <select id="getUserById" resultType="User">-->
+    <!--        select *-->
+    <!--        from t_user-->
+    <!--        where id = #{id}-->
+    <!--    </select>-->
+<!--    &#45;&#45; &#45;&#45;         select * from t_user where username like '%${username}%'-->
+<!--    &#45;&#45;         select * from t_user where username like concat('%',#{mohu},'%')-->
+<!--    &#45;&#45; &#45;&#45;         select * from t_user where username like "%"#{username}"%"-->
+
+<!--    List<User> testMohu(@Param("username") String username);-->
+<!--    <select id="testMohu" resultType="User">-->
+<!--            select * from t_user where username like "%"#{username}"%"-->
+<!--    </select>-->
+<!--    int deleteMore(@Param("ids") String ids);-->
+    <delete id="deleteMore">
+        delete from t_user where  id in (${ids})
+    </delete>
+<!--    List<User> getAllUser(@Param("tablename") String tablename);-->
+    <select id="getAllUser" resultType="User">
+        select * from ${tablename}
+    </select>
+<!--    int insertUser(User user);-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user value (null,#{username},#{password},#{id},#{sex})
+    </insert>
+
+
+    <resultMap id="userMap" type="User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+
+    </resultMap>
+    <!--    List<User> testMohu(@Param("username") String username);-->
+    <select id="testMohu" resultMap="userMap">
+        select * from t_user where username like "%"#{username}"%"
+    </select>
+
+</mapper>

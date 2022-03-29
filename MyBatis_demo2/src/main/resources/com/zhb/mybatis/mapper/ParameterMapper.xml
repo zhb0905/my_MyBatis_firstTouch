@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--!!namespace-->
+
+<mapper namespace="com.zhb.mybatis.mapper.ParameterMapper">
+<!--    &lt;!&ndash;    User getUserById(@Param("id") int id);&ndash;&gt;-->
+<!--    <select id="getUserById" resultType="User">-->
+<!--        select *-->
+<!--        from t_user-->
+<!--        where id = #{id}-->
+<!--    </select>-->
+<!--    List<User> getAllUser();-->
+    <select id="getAllUser" resultType="User">
+        select * from t_user;
+    </select>
+<!--    User GetUserById(@Param("id") int id);-->
+    <select id="GetUserById" resultType="User">
+        select * from t_user where id = #{id}
+    </select>
+<!--    int getCount();-->
+    <select id="getCount" resultType="_integer">
+        select COUNT(id) from t_user
+    </select>
+
+<!--    Map<String,Object> getUserToMap(@Param("id") int id);-->
+    <select id="getUserToMap" resultType="map">
+        select * from t_user where id = #{id}
+    </select>
+<!--    List<Map<String,Object>> getAllUserToMap();-->
+    <select id="getAllUserToMap" resultType="map">
+        select * from t_user
+    </select>
+<!--    Map<String,Object > getAllUserToMapInMap();-->
+    <select id="getAllUserToMapInMap" resultType="map">
+        select * from t_user
+    </select>
+</mapper>

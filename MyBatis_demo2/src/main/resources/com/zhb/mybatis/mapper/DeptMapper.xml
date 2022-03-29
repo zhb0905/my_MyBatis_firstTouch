@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--!!namespace-->
+
+<mapper namespace="com.zhb.mybatis.mapper.DeptMapper">
+    <!--    &lt;!&ndash;    User getUserById(@Param("id") int id);&ndash;&gt;-->
+    <!--    <select id="getUserById" resultType="User">-->
+    <!--        select *-->
+    <!--        from t_user-->
+    <!--        where id = #{id}-->
+    <!--    </select>-->
+
+    <resultMap id="deptEmpMap" type="Dept">
+        <id property="did" column="did"/>
+        <result property="dname" column="dname"></result>
+        <!--ofType：设置collection标签所处理的集合属性中存储数据的类型 -->
+        <collection property="emps" ofType="Emp">
+            <id property="eid" column="eid"></id>
+            <result property="ename" column="ename"></result>
+            <result property="age" column="age"></result>
+            <result property="sex" column="sex"></result>
+        </collection>
+    </resultMap>
+    <!--Dept getDeptEmpByDid(@Param("did") int did);-->
+    <select id="getDeptEmpByDid" resultMap="deptEmpMap">
+        select dept.*,emp.* from t_dept dept left join t_emp emp on dept.did = emp.did where dept.did = #{did}
+    </select>
+
+    <!--List<Emp> getEmpListByMoreTJ(Emp emp);-->
+    <select id="getEmpListByMoreTJ" resultType="Emp">
+        select * from t_emp where 1=1
+        <if test="ename != '' and ename != null">
+            and ename = #{ename}
+        </if>
+        <if test="age != '' and age != null">
+            and age = #{age}
+        </if>
+        <if test="sex != '' and sex != null">
+            and sex = #{sex}
+        </if>
+
+    </select>
+    <select id="getEmpListByMoreTJ2" resultType="Emp">
+        select * from t_emp
+        <where>
+            <if test="ename != '' and ename != null">
+            and ename = #{ename}
+            </if>
+        </where>
+    </select>
+
+    <select id="getEmpListByMoreTJ" resultType="Emp">
+        select * from t_emp
+        <trim prefix="where" suffixOverrides="and">
+            <if test="ename != '' and ename != null">
+                and ename = #{ename}
+            </if>
+        </trim>
+    </select>
+<!--    choose、when、otherwise-->
+<!--    foreach-->
+<!--sql片段-->
+    <sql id="empColumns">
+        eid,ename,age,age,sex,did
+    </sql>
+<!--        select <include refid="empColumns"></include> from t_emp-->
+
+
+</mapper>
